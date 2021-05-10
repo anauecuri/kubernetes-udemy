@@ -1,0 +1,21 @@
+### funciona apenas com um servico de loadbalancer na nuvem: AWS, GCP, AZURE ###
+
+apiVersion: v1
+
+kind: Service
+
+metadata:
+  name: myapp-service
+  labels:
+    app: myapp 
+    type: front-end
+
+spec: 
+  type: LoadBalancer
+  ports:
+    - targetPort: 80
+      port: 80
+      nodePort: 30008
+  selector: 
+    app: myapp
+    type: front-end

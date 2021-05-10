@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+
+kind: DeamonSet
+
+metadata:
+  name: myapp-deamon
+  labels:
+    app: myapp 
+    type: front-end
+
+spec: 
+  template:
+    metadata:
+      name: myapp-pod
+      labels:
+        app: myapp
+        type: front-end
+    spec:
+      containers:
+        - name: nginx-container
+          image: ningx
+  selector: 
+    matchLabels:
+      type: front-end

@@ -1,0 +1,48 @@
+apiVersion: v1
+
+kind: Pod
+
+metadata:
+  name: myapp-pod
+  namespace: dev
+  labels:
+    app: myapp 
+    type: front-end
+
+spec: 
+  containers:
+    - name: nginx-container
+      image: ningx
+      ports:
+        - containerPort: 8080
+      resources:
+        requests:
+          memory: "1Gi"
+          cpu: 1
+        limits:
+          memory: "2Gi"
+          cpu: 2  
+      envFrom: ###configurar variaveis de um congimap e/ou secrets
+        - configMapRef:
+            name: app-config
+      ###inserir variaveis direto na config do pod sem usar configmap
+      #env:
+      #  - name: APP_COLOR
+      #    value: blue
+      ###ou ainda...
+      #env:
+      #  - name: APP_COLOR
+      #    valueFrom:  
+      #      configMapKeyRef:
+      #        name: app-config
+      #        key: APP_COLOR
+        - secretRef: ###secret
+            name: app-secret
+  tolerations: ###taint and tolerations###
+    - key: "app"
+      operator: "Equal"
+      value: "blue"
+      effect: "NoSchedule"
+  nodeSelector: ###definir em qual node executar por capacity -- precisa nomear node antes###
+    size: Large     
+  

@@ -1,0 +1,47 @@
+kubectl get pods
+kubectl get pods --namespace=<name> [default, kube-system, kube-public // lista pods em um namespace]
+kubectl get replicaset
+kubectl get deployments
+kubectl get services
+kubectl get deamonsets
+kubectl get pods --selector env=dev [use selector para filtrar por label]
+kubectl get configmaps
+kubectl get secrets
+kubectl get all
+kubectl logs <options>
+kubectl create -f <filename>
+kubectl create -f <filename> --namespace=<name>
+kubectl replace -f <filename>
+kubectl create namespace <nome>
+kubectl delete replicaset <replicasetname>
+kubectl scale -replicas=6 -f <filename>
+kubectl config set-context $(kubectl config current-context) --namespace=<nome> [mudar de namespace]
+kubectl describe <item> [pods, replicaset, etc]
+kubectl edit <replicaset, deployments, pods, etc> <name>
+kubectl run nginx --image=nginx
+kubectl run nginx --image=nginx --dry-run=client -o yaml [Generate POD Manifest YAML file (-o yaml). Don't create it(--dry-run)]
+kubectl create deployment --image=nginx nginx
+kubectl create deployment --image=nginx nginx --dry-run=client -o yaml [Generate Deployment YAML file (-o yaml). Don't create it(--dry-run)]
+kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-deployment.yaml [edit file to update it]
+kubectl apply -f <file>
+kubectl apply -f /path/to/config-files [executa apply em todos os arquivos de configuração]
+kubectl expose deployment nginx --port 80 [configura porta de um deploy]
+kubectl taint nodes <nodename> <key=value:taint-effect> [taint-effect pode ser NoSchedule, PreferNoSchedule ou NoExecute]
+-----> exemplo: kubectl taint nodes node1 app=blue:NoSchedule
+kubectl taint nodes controlplane node-role.kubernetes.io/master:NoSchedule- [remover taint add sinal - ao final do valor do taint]
+kubectl label nodes <nodename> <labelkey>=<labelvalue>
+-----> exemplo: kubectl label nodes node1 size=Large
+NOTA: usar taint/toleration + affinitty faz com que consigamos "linkar" um pod ao seu respectivo node e impede que outros pods se cinectem a este node
+kubectl top <node ou pod> [verificar metricas // precisa instalar metrics-server antes] 
+kubectl rollout status deployment/myapp-deployment
+kubectl rollout history deployment/myapp-deployment
+kubectl rollout undo deployment/myapp-deployment [rollback]
+kubectl create configmap <nome configmap> --from-literal=<key>=<value>
+-----> exemplo create configmap app-config --from-literal=APP_COLOR=blue
+kubectl create configmap <nome configmap> --from-file=<path do file>
+kubectl create secret generic <nome da secret> --from-literal=<key>=<value>
+kubectl create secret generic <nome da secret> --from-file=<path do file>
+
+
+
+

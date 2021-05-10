@@ -1,0 +1,21 @@
+apiVersion: v1
+
+kind: Pod
+
+metadata:
+  name: myapp-pod
+
+spec: 
+  containers:
+    - name: data-processor
+      image: data-processor
+  affinity: ###definir em qual node executar por capacity -- precisa nomear node antes###
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution: ###pode ser tambem preferredDuringSchedulingIgnoredDuringExecution ou requiredDuringSchedulingRequiredDuringExecution###
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: size
+            operator: In ###pode ser tambem NotIn###  ###operator pode ser tambem Exists, dai nao precisa indicar o values###   
+            values:
+            - Large
+              Medium
